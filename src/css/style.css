@@ -1,0 +1,9 @@
+#dom{
+    color: red;
+}
+
+.texto-vertical-3 {
+    width:20px;
+    word-wrap: break-word;
+    text-align:center;
+  }
