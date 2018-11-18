@@ -87,11 +87,15 @@ function formatTimestamp(time, type){
 }
 
 function popDayResumen(time,week){
-    //console.info("click ", time, new Date(time));
+    //console.info("click ", time, new Date(time), " WEEK", week);
     //addEvento(time,week, "Descripcion de prueba")
+    getHTLMevents(time, week,document.getElementById("eventFormat"));
     document.getElementById("dayFormat").innerHTML = formatTimestamp(time,"long");
     $('#dayPop').modal();
+    
 }
+
+
 
 function genWeek(eTable, dateInit){
     let dayAux = dateInit;

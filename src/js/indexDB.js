@@ -42,7 +42,7 @@ function addEvento(dia,sem, descrip){
     .add({dia: dia, week: sem, data: descrip});
 
     req.onsuccess = function(event){
-        console.log("ADD exitosamente!");
+        console.log("ADD exitosamente!", sem);
     }
 
     req.onerror = function(event){
@@ -50,3 +50,51 @@ function addEvento(dia,sem, descrip){
     }
 }
 
+function getHTLMevents(time,week, element){
+    let limit, ind;
+
+    
+    if(time){
+        limit = IDBKeyRange.only(time);
+
+        console.log("Consulta dia ", time, new Date(time));
+        ind = db.transaction("eventos")
+            .objectStore("eventos")
+            .index("dia");
+    }else if(week){
+        limit = IDBKeyRange.only(week);
+        console.log("Consulta week ", week);
+        ind = db.transaction("eventos")
+            .objectStore("eventos")
+            .index("week");
+    } 
+    
+    if(time || week){
+        let ulElem = document.createElement("ul");
+        ulElem.setAttribute("class", "list-group list-group-flush");
+        let liElem;
+
+        ind.openCursor(limit)
+        .onsuccess = function(event){
+            
+            let cursor = event.target.result;
+            if(cursor){
+                console.log("WEEk", cursor.value.week, cursor.value.dia ,new Date(cursor.value.dia));
+                
+                liElem = document.createElement("li");
+                liElem.setAttribute("class", "list-group-item");
+                liElem.innerHTML = `<i>${cursor.value.data}</i>`;
+
+                ulElem.appendChild(liElem);
+
+                cursor.continue();
+            }else{
+                //Nada mas
+                console.log("Nada mas",ulElem);
+                element.innerHTML = "";
+                element.appendChild(ulElem);
+            }
+            
+        }
+    }
+}
