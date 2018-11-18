@@ -7,3 +7,7 @@
     word-wrap: break-word;
     text-align:center;
   }
+
+.day:hover{
+    cursor: pointer;
+  }

@@ -54,9 +54,11 @@ function isFeriado(datechk){
         if (feriados.hasOwnProperty(dferiado)) {
             const element = feriados[dferiado];
             //console.log(element,getTimefromDate(element));
-
-            //if(datechk.getTime() > getTimefromDate(element))
-                //break;
+            //console.log(datechk, element);
+            if(getTimefromDate(element) > datechk.getTime() ){
+                //console.info("break?");
+                break;
+            }
             
             if(datechk.getTime() === getTimefromDate(element))
                 return true;
@@ -64,16 +66,6 @@ function isFeriado(datechk){
         }
     }
 
-    for (let dferiado in feriados) {
-        
-       if(datechk.getTime() > getTimefromDate(dferiado)){
-            continue;
-       }
-
-        if(datechk.getTime() === getTimefromDate(dferiado)){
-            return true;
-        }
-    }
     return false;
 }
 
@@ -81,27 +73,50 @@ function isInPerio(time){
     return ((time.getTime() <= getTimefromDate(dataSem.datos.finals[0])) || (time.getTime() >= getTimefromDate(dataSem.datos.inicios[1])))
 }
 
+function formatTimestamp(time, type){
+    let auxDay = new Date(time);
+    switch (type) {
+        case 'long':
+            return (auxDay.getDate() + " " + getMes(auxDay.getMonth()));
+            break;
+    
+        default:
+            return (auxDay.getDate() + "/" + (auxDay.getMonth()+1) + "/" + auxDay.getFullYear());
+            break;
+    }
+}
+
+function popDayResumen(time,week){
+    //console.info("click ", time, new Date(time));
+    //addEvento(time,week, "Descripcion de prueba")
+    document.getElementById("dayFormat").innerHTML = formatTimestamp(time,"long");
+    $('#dayPop').modal();
+}
+
 function genWeek(eTable, dateInit){
     let dayAux = dateInit;
     let topDay = addDays(dateInit, 6);
     
     let rowWeek = document.createElement('tr');
-    let colDay;
+    let colDay, auxW = 0;
 
     if(dataSem.datos.finals.length >1){
         //Periodo no es corrido
+        auxW = contW;
         if(isInPerio(dayAux)) {
             //Si esta dentro de periodo
             //Establecemos Nro de semana
             colDay = document.createElement('td');
             colDay.innerHTML = `<b>${contW}</b>`;
-            colDay.setAttribute("class", "table-active");
+            colDay.setAttribute("class", "table-active text-center");
+            colDay.setAttribute("scope", "row");
             rowWeek.appendChild(colDay);
             contW++;
         }else{
             //No es parte del periodo
             colDay = document.createElement('td');
             //colDay.innerHTML = '';
+            auxW = -1;
             colDay.setAttribute("class", "table-active");
             rowWeek.appendChild(colDay);
         }        
@@ -131,30 +146,31 @@ function genWeek(eTable, dateInit){
             }
         }
 
-        //Generamos dia
+        /************ Generamos dia *******************/
         colDay = document.createElement('td');
-        colDay.setAttribute("class", colors[iM]);
+        colDay.setAttribute("class", colors[iM] + " day");
+        colDay.setAttribute("onclick", `popDayResumen(${dayAux.getTime()},${auxW})`);
         colDay.innerHTML = `${dayAux.getDate()}`;
         //colDay.innerHTML = `<b>${dayAux.getDate()}</b>`;
 
         if(!isInPerio(dayAux)){
             //fuera de periodo
-            colDay.setAttribute("class", "table-secondary");
+            colDay.setAttribute("class", "table-secondary" + " day");
         }else if(isFeriado(dayAux)){
             //feriado
-            colDay.setAttribute("class", "table-danger");
-            colDay.innerHTML = `<i>${dayAux.getDate()}</i>`;
+            colDay.setAttribute("class", "table-danger" + " day");
+            colDay.innerHTML = `<i>${colDay.innerHTML}</i>`;
         }else if(dayAux.getDay() == 0){
             //Domingo
-            colDay.innerHTML = `<b id="dom">${dayAux.getDate()}</b>`;
+            colDay.innerHTML = `<b id="dom">${colDay.innerHTML}</b>`;
             //colDay.setAttribute("class", "table-danger");
         }else if(dayAux.getDay() == 6){
             //sabado
-            colDay.innerHTML = `<b>${dayAux.getDate()}</b>`;
+            colDay.innerHTML = `<b>${colDay.innerHTML}</b>`;
             //colDay.setAttribute("class", "table-info");
         }else {
             //Dia normal
-            colDay.innerHTML = `${dayAux.getDate()}`;
+            colDay.innerHTML = `${colDay.innerHTML}`;
         }
         
 
@@ -165,7 +181,7 @@ function genWeek(eTable, dateInit){
 
     if(poner){
         colDay = document.createElement('td');
-        colDay.setAttribute("class", colors[iM] + " texto-vertical-3");
+        colDay.setAttribute("class", colors[iM] + " texto-vertical-3 text-center");
         colDay.innerHTML = `<span id="texto-vertical-3">${getMes(addDays(dayAux,-1).getMonth())}</span>`;
         rowWeek.appendChild(colDay);
         poner = false;
