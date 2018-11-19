@@ -36,17 +36,31 @@ req.onsuccess = function(event){
     console.log('abierto');
 }
 
-function addEvento(dia,sem, descrip){
+function addEvento(dia,sem,titulo,hora,descrip){
+    let at = new Date(dia);
+    at.setHours(hora);
+
     let req = db.transaction(["eventos"], "readwrite")
     .objectStore("eventos")
-    .add({dia: dia, week: sem, data: descrip});
+    .add({dia: at.getTime(), week: sem, titulo, hora, data: descrip});
 
     req.onsuccess = function(event){
         console.log("ADD exitosamente!", sem);
+        $('#newEvent').modal('hide');
     }
 
     req.onerror = function(event){
         console.error("ERROR al add evento");
+    }
+}
+
+function delEvento(pkey, element){
+    let todel = db.transaction("eventos", "readwrite")
+                .objectStore("eventos")
+                .delete(pkey)
+    .onsuccess = function(event){
+        element.parentNode.parentNode.removeChild(element.parentNode);
+        console.log("Evento eliminado");
     }
 }
 
@@ -55,7 +69,7 @@ function getHTLMevents(time,week, element){
 
     
     if(time){
-        limit = IDBKeyRange.only(time);
+        limit = IDBKeyRange.bound(time,time+86400000,false,true);
 
         console.log("Consulta dia ", time, new Date(time));
         ind = db.transaction("eventos")
@@ -79,11 +93,11 @@ function getHTLMevents(time,week, element){
             
             let cursor = event.target.result;
             if(cursor){
-                console.log("WEEk", cursor.value.week, cursor.value.dia ,new Date(cursor.value.dia));
+                console.log(cursor);
                 
                 liElem = document.createElement("li");
-                liElem.setAttribute("class", "list-group-item");
-                liElem.innerHTML = `<i>${cursor.value.data}</i>`;
+                liElem.setAttribute("class", "list-group-item justify-content-between align-items-center");
+                liElem.innerHTML = `<span class="badge badge-danger badge-pill clicker" onclick="delEvento(${cursor.primaryKey}, this)">&times;</span><b>${cursor.value.titulo} (${getHr(cursor.value.hora)}):</b> <i>${cursor.value.data}</i>`;
 
                 ulElem.appendChild(liElem);
 

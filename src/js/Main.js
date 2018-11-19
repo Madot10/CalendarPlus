@@ -1,5 +1,6 @@
 let colors = ["table-success","table-warning"];
 let iM = 0, contW = 1, mesAc, poner = true;
+let gTime, gWeek;
 
 function startOfWeek(date) {
     var diff = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1);
@@ -91,11 +92,45 @@ function popDayResumen(time,week){
     //addEvento(time,week, "Descripcion de prueba")
     getHTLMevents(time, week,document.getElementById("eventFormat"));
     document.getElementById("dayFormat").innerHTML = formatTimestamp(time,"long");
-    $('#dayPop').modal();
+
+    gTime = time;
+    gWeek = week;
+
+    $('#dayPop').modal('show');
     
 }
 
+function popNewEvento(){
+    $('#dayPop').modal('hide');
+    document.getElementById("inputTitulo").value = '';
+    document.getElementById("timeRange").value = 12;
+    document.getElementById("inputDescripcion").value = '';
+    $('#newEvent').modal('show');
+}
 
+function genNewEvent(){
+    let title = document.getElementById("inputTitulo").value;
+    let hora = document.getElementById("timeRange").value;
+    let des = document.getElementById("inputDescripcion").value;
+    addEvento(gTime, gWeek, title, hora, des);
+}
+
+function getHr(value){
+    let f;
+    if(value > 12){
+        f = `${value - 12}:00 PM`;
+    }else{
+        f = `${value}:00 AM`;
+    }
+    return f;
+}
+
+function rangeTime(ele){
+    let spT = document.getElementById("timeToshow");
+    spT.innerHTML = "";
+    spT.innerHTML = getHr(ele.value)
+    
+}
 
 function genWeek(eTable, dateInit){
     let dayAux = dateInit;
