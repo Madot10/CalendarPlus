@@ -114,7 +114,7 @@ function getHTLMevents(time,week, element){
                 
                 liElem = document.createElement("li");
                 liElem.setAttribute("class", "list-group-item justify-content-between align-items-center");
-                liElem.innerHTML = `<span class="badge badge-danger badge-pill clicker" onclick="delEvento(${cursor.primaryKey}, this)">&times;</span><b>${cursor.value.titulo} (${getHr(cursor.value.hora)}):</b> <i>${cursor.value.data}</i>`;
+                liElem.innerHTML = `<span class="badge badge-danger badge-pill clicker" onclick="delEvento(${cursor.primaryKey}, this)" ontouch ="delEvento(${cursor.primaryKey}, this)" >&times;</span><b>${cursor.value.titulo} (${getHr(cursor.value.hora)}):</b> <i>${cursor.value.data}</i>`;
 
                 ulElem.appendChild(liElem);
 
