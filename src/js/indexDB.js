@@ -67,7 +67,7 @@ function delEvento(pkey, element){
 function getCountEvent(time){
     let limit = IDBKeyRange.bound(time,time+86400000,false,true);
 
-    let trns = await db.transaction(["eventos"], "readonly")
+    let trns = db.transaction(["eventos"], "readonly")
                 .objectStore("eventos")
                 .index("dia")
                 .count(limit);
