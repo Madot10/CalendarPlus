@@ -190,6 +190,7 @@ function genWeek(eTable, dateInit){
         colDay = document.createElement('td');
         colDay.setAttribute("class", colors[iM] + " day");
         colDay.setAttribute("onclick", `popDayResumen(${dayAux.getTime()},${auxW})`);
+        colDay.setAttribute("ontouch", `popDayResumen(${dayAux.getTime()},${auxW})`);
         colDay.innerHTML = `${dayAux.getDate()}`;
         //colDay.innerHTML = `<b>${dayAux.getDate()}</b>`;
 
