@@ -186,6 +186,7 @@ function genWeek(eTable, dateInit){
         }
 
         /************ Generamos dia *******************/
+       // let count =  getCountEvent(dayAux.getTime());
         colDay = document.createElement('td');
         colDay.setAttribute("class", colors[iM] + " day");
         colDay.setAttribute("onclick", `popDayResumen(${dayAux.getTime()},${auxW})`);

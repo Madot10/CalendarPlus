@@ -64,6 +64,23 @@ function delEvento(pkey, element){
     }
 }
 
+function getCountEvent(time){
+    let limit = IDBKeyRange.bound(time,time+86400000,false,true);
+
+    let trns = await db.transaction(["eventos"], "readonly")
+                .objectStore("eventos")
+                .index("dia")
+                .count(limit);
+     trns.onsuccess = function(event){
+        console.log(trns.result);
+        if(trns.result)
+            return trns.result;
+        else
+            return "";
+    }
+
+}
+
 function getHTLMevents(time,week, element){
     let limit, ind;
 
