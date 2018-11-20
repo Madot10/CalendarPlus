@@ -190,7 +190,7 @@ function genWeek(eTable, dateInit){
         colDay = document.createElement('td');
         colDay.setAttribute("class", colors[iM] + " day");
         colDay.setAttribute("onclick", `popDayResumen(${dayAux.getTime()},${auxW})`);
-        colDay.setAttribute("ontouchstart", `popDayResumen(${dayAux.getTime()},${auxW})`);
+        colDay.setAttribute("ontouchenter", `popDayResumen(${dayAux.getTime()},${auxW})`);
         colDay.innerHTML = `${dayAux.getDate()}`;
         //colDay.innerHTML = `<b>${dayAux.getDate()}</b>`;
 
@@ -253,3 +253,31 @@ function genCalendario(){
 
 
 window.onload = () => genCalendario();
+
+
+function changeScreen(scrName){
+    let eMain = document.getElementById("main");
+    let eStart = document.getElementById("start");
+    let eConfig = document.getElementById("conf");
+
+    eMain.style.display = "none";
+    eStart.style.display = "none";
+    eConfig.style.display = "none";
+
+    switch (scrName) {
+        case "main":
+            eMain.style.display = "block";
+            break;
+
+        case "conf":
+            eConfig.style.display = "block";
+            break;
+
+        case "start":
+                eStart.style.display = "block";
+            break;
+    
+        default:
+            break;
+    }
+}
