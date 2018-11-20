@@ -252,7 +252,7 @@ function genCalendario(){
 
 
 
-window.onload = () => genCalendario();
+//window.onload = () => genCalendario();
 
 
 function changeScreen(scrName){
@@ -264,20 +264,46 @@ function changeScreen(scrName){
     eStart.style.display = "none";
     eConfig.style.display = "none";
 
+    //cerrar navbar
+    document.getElementById("navbarTog").classList.remove("show");
+    document.getElementById("navbarTog").classList.add("collapse");
+
     switch (scrName) {
         case "main":
-            eMain.style.display = "block";
+            if(isAuth()){
+                document.body.classList.remove("bg-primary");
+                genCalendario();
+                eMain.style.display = "block";
+            }else{
+                changeScreen("start");
+                popError("Debes iniciar sesion para poder continuar");
+            }
+
             break;
 
         case "conf":
-            eConfig.style.display = "block";
+            if(isAuth()){
+                document.body.classList.remove("bg-primary");
+                document.getElementById("emailAcount").innerHTML = userData.email;
+                eConfig.style.display = "block";
+            }else{
+                changeScreen("start");
+                popError("Debes iniciar sesion para poder continuar");
+            }
+
             break;
 
         case "start":
+                document.body.classList.add("bg-primary");
                 eStart.style.display = "block";
             break;
     
         default:
             break;
     }
+}
+
+function popError(msg){
+    document.getElementById("errText").innerHTML = msg;
+    $('#errModal').modal('show');
 }

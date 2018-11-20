@@ -30,6 +30,26 @@
 </head>
 
 <body class="bg-primary">
+
+    <!-- MODAL ERROR -->
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="errModal">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">ERROR! </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Algo pasó...</p>
+                        <p><span id="errText"></span></p>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+
     <!-- MODAL EVENTOS DIA -->
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="dayPop">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -54,7 +74,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- MODAL NUEVO EVENTO -->
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="newEvent">
@@ -102,20 +121,20 @@
             <a class="navbar-brand" href="#">
                 <b>Calendario+</b>
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTog" aria-controls="navbarTog"
                 aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <div class="collapse navbar-collapse" id="navbarTog" >
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Inicio</a>
+                        <a class="nav-link" href="#" onclick="changeScreen('main')">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Configuracion</a>
+                        <a class="nav-link" href="#" onclick="changeScreen('conf')">Configuracion</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Salir</a>
+                        <a class="nav-link" href="#" onclick="LogOut()">Salir</a>
                     </li>
                 </ul>
 
@@ -131,7 +150,7 @@
                                 <h4>BIENVENIDO</h4>
                                 <h4>CALENDARIO+</h4>
                                 <p>Conectate para tener toda tu planificación UCAB en un solo lugar</p>
-                                <button type="button" class="btn btn-outline-light btn-block"><i class="fab fa-google"></i> Iniciar sesión</button>
+                                <button type="button" class="btn btn-outline-light btn-block" onclick="LogInPopup()"><i class="fab fa-google"></i> Iniciar sesión</button>
                             </div>
                             </div>
                 </div>
