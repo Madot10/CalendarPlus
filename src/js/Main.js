@@ -240,8 +240,12 @@ function genCalendario(){
     /***** PRIMER BLOQUE DE PERIODO*****/
     let initWeek = new Date(auxi[2],auxi[1]-1,auxi[0]);
     let topWeek =  new Date(auxf[2],auxf[1]-1,auxf[0]);
-    
+
     let tableMain = document.getElementById('calendario').getElementsByTagName('tbody')[0];
+    tableMain.innerHTML = '';
+
+    contW = 1
+    
     mesAc = initWeek.getMonth();
     while(initWeek.getTime() <= topWeek.getTime()){
         tableMain.appendChild(genWeek(tableMain,startOfWeek(initWeek)));
