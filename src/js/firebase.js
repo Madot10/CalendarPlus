@@ -1,11 +1,11 @@
-var config = {
-    apiKey: "AIzaSyCj2zcmgCakzQmcvNnW43pro8gUTMgkVfY",
-    authDomain: "ucalendar-plus.firebaseapp.com",
-    databaseURL: "https://ucalendar-plus.firebaseio.com",
-    projectId: "ucalendar-plus",
-    storageBucket: "ucalendar-plus.appspot.com",
-    messagingSenderId: "1084269721715"
-  };
+let config = {
+  apiKey: "AIzaSyCPkciAXvB2Mh4tOAjeaLParBd5OeObZCY",
+  authDomain: "calendario-plus2018.firebaseapp.com",
+  databaseURL: "https://calendario-plus2018.firebaseio.com",
+  projectId: "calendario-plus2018",
+  storageBucket: "calendario-plus2018.appspot.com",
+  messagingSenderId: "106881987833"
+};
   
 firebase.initializeApp(config);
 
