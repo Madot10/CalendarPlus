@@ -129,3 +129,12 @@ function getHTLMevents(time,week, element){
         }
     }
 }
+
+function deleteAllData(){
+    let trns = db.transaction(["eventos"], "readwrite")
+                .objectStore("eventos")
+                .clear();
+    trns.onsuccess = function(ev){
+        console.log("Eliminada data correctamente");
+    }
+}
