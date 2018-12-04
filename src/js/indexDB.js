@@ -71,10 +71,11 @@ function getCountEvent(time, id) {
         .objectStore("eventos")
         .index("dia")
         .count(limit);
+
     trns.onsuccess = function (event) {
-        //console.log(trns.result);
+        console.log("Contador ", trns.result);
         if (trns.result)
-            document.getElementsByClassName("day")[id].innerHTML += `<span class="badge badge-primary">${trns.result}</span>`;
+            document.getElementsByClassName("day")[id].innerHTML += ` <span class="badge badge-primary">${trns.result}</span>`;
 
     }
 
@@ -137,3 +138,4 @@ function deleteAllData() {
         console.log("Eliminada data correctamente");
     }
 }
+

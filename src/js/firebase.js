@@ -19,7 +19,7 @@ function LogInPopup() {
       email: result.user.email,
       name: result.user.displayName
     };
-    changeScreen("main");
+    //changeScreen("main");
     document.getElementById("navbarTog").style.display = "-ms-flexbox";
 
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
