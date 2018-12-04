@@ -113,6 +113,7 @@ function genNewEvent(){
     let hora = document.getElementById("timeRange").value;
     let des = document.getElementById("inputDescripcion").value;
     addEvento(gTime, gWeek, title, hora, des);
+    genCalendario();
 }
 
 function getHr(value){
@@ -268,9 +269,10 @@ function changeScreen(scrName){
     let eStart = document.getElementById("start");
     let eConfig = document.getElementById("conf");
 
-    eMain.style.display = "none";
-    eStart.style.display = "none";
-    eConfig.style.display = "none";
+    //Ocultamos todo
+    for (let elem of document.getElementsByClassName("screen")) {
+        elem.style.display = "none";
+    }
 
     //cerrar navbar
     document.getElementById("navbarTog").classList.remove("show");
