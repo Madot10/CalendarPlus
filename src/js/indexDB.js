@@ -64,7 +64,7 @@ function delEvento(pkey, element){
     }
 }
 
-function getCountEvent(time){
+function getCountEvent(time, id){
     let limit = IDBKeyRange.bound(time,time+86400000,false,true);
 
     let trns = db.transaction(["eventos"], "readonly")
@@ -72,11 +72,10 @@ function getCountEvent(time){
                 .index("dia")
                 .count(limit);
      trns.onsuccess = function(event){
-        console.log(trns.result);
+        //console.log(trns.result);
         if(trns.result)
-            return trns.result;
-        else
-            return "";
+            document.getElementsByClassName("day")[id].innerHTML += `<span class="badge badge-primary">${trns.result}</span>`;
+            
     }
 
 }

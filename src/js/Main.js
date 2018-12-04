@@ -1,5 +1,5 @@
 let colors = ["table-success","table-warning"];
-let iM = 0, contW = 1, mesAc, poner = true;
+let iM = 0, contW = 1, mesAc, poner = true, contDay;
 let gTime, gWeek;
 
 function startOfWeek(date) {
@@ -185,9 +185,11 @@ function genWeek(eTable, dateInit){
             }
         }
 
-        /************ Generamos dia *******************/
-       // let count =  getCountEvent(dayAux.getTime());
+
+        /************ Generamos dia *******************/       
+        getCountEvent(dayAux.getTime(), contDay);
         colDay = document.createElement('td');
+
         colDay.setAttribute("class", colors[iM] + " day");
         colDay.setAttribute("onclick", `popDayResumen(${dayAux.getTime()},${auxW})`);
         colDay.setAttribute("ontouchenter", `popDayResumen(${dayAux.getTime()},${auxW})`);
@@ -217,6 +219,7 @@ function genWeek(eTable, dateInit){
 
         rowWeek.appendChild(colDay);
         dayAux = addDays(dayAux,1);
+        contDay++;
     }
 
 
@@ -244,7 +247,8 @@ function genCalendario(){
     let tableMain = document.getElementById('calendario').getElementsByTagName('tbody')[0];
     tableMain.innerHTML = '';
 
-    contW = 1
+    contW = 1;
+    contDay = 0;
     
     mesAc = initWeek.getMonth();
     while(initWeek.getTime() <= topWeek.getTime()){
