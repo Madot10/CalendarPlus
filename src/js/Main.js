@@ -188,7 +188,7 @@ function genWeek(eTable, dateInit){
 
 
         /************ Generamos dia *******************/       
-        console.log("Llamams",getCountEvent(dayAux.getTime(), contDay));
+        getCountEvent(dayAux.getTime(), contDay);
         colDay = document.createElement('td');
 
         colDay.setAttribute("class", colors[iM] + " day");

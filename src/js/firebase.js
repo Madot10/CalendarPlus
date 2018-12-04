@@ -10,8 +10,11 @@ let config = {
 firebase.initializeApp(config);
 
 let provider = new firebase.auth.GoogleAuthProvider();
+let dbf = firebase.firestore();
+dbf.settings({ timestampsInSnapshots: true });
+
 let u = firebase.auth().currentUser;
-let userData;
+let userData, arrEventos = [];
 
 function LogInPopup() {
   firebase.auth().signInWithPopup(provider).then(function (result) {
@@ -75,3 +78,65 @@ window.onload = () => {
     }
   });
 }
+
+/*
+function existUser(email){
+    dbf.collection("users").doc(email)
+        .get().then(function(doc){
+            if(doc.exists){
+                //Hay registro
+                console.log("doc", doc.data());
+            }else{
+                //No hay registro
+            }
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+}*/
+/*
+function syncToCloud(){
+    arrEventos = [];
+    db.transaction("eventos").objectStore("eventos").openCursor()
+        .onsuccess = function(eve){
+            var cursor = event.target.result;
+            if (cursor) {
+              console.log(cursor.value);
+              arrEventos.push(cursor.value);
+
+              //agregar cada uno al servidor
+              dbf.collection("users").doc(userData.email).collection(dataSem.Periodo)
+                    .add(cursor.value)
+                    .then(function(docRef) {
+                        console.log("Document written with ID: ", docRef.id);
+                    })
+                    .catch(function(error) {
+                        console.error("Error adding document: ", error);
+                    });
+
+              cursor.continue();
+            }
+            else {
+              console.log("No more entries!");
+              
+            }
+          };
+}
+
+function syncLocal(){
+    return dbf.collection("users").doc(userData.email)
+        .collection(dataSem.Periodo).get()
+        .then(function(querySnapshot) {
+            deleteAllData().onsuccess = function (ev) {
+                ///Totalmente bd borrada
+                querySnapshot.forEach(function(doc) {
+                    //Add eventos traidos
+                    addEvento(doc.data().dia, doc.data().week, doc.data().titulo, doc.data().hora, doc.data().data);
+                    console.log(doc.id, " => ", doc.data());
+                });
+
+            }    
+        })
+        .catch(function(error) {
+            console.log("Error getting documents: ", error);
+        });
+}*/
