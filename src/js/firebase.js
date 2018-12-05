@@ -10,8 +10,8 @@ let config = {
 firebase.initializeApp(config);
 
 let provider = new firebase.auth.GoogleAuthProvider();
-let dbf = firebase.firestore();
-dbf.settings({ timestampsInSnapshots: true });
+//let dbf = firebase.firestore();
+//dbf.settings({ timestampsInSnapshots: true });
 
 let u = firebase.auth().currentUser;
 let userData, arrEventos = [];
@@ -32,7 +32,7 @@ function LogInPopup() {
         // if a user forgets to sign out.
         // ...
         // New sign-in will be persisted with session persistence.
-        console.log("ok");
+        //console.log("ok");
       })
       .catch(function (error) {
         // Handle Errors here.
@@ -65,7 +65,7 @@ window.onload = () => {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       // User is signed in.
-      console.log("ok1", user);
+      //console.log("ok1", user);
       userData = {
         email: user.email,
         name: user.displayName
@@ -73,7 +73,7 @@ window.onload = () => {
       changeScreen("main");
     } else {
       // No user is signed in.
-      console.log("no1");
+      //console.log("no1");
       changeScreen("start");
     }
   });

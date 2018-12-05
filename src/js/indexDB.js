@@ -25,7 +25,7 @@ req.onupgradeneeded = function (event) {
     objectStore.createIndex("dia", "dia", { unique: false });
 
     objectStore.transaction.oncomplete = function (event) {
-        console.log('create');
+        //console.log('create');
     }
 
 }
@@ -33,7 +33,7 @@ req.onupgradeneeded = function (event) {
 req.onsuccess = function (event) {
     //OK OPEN DB
     db = event.target.result;
-    console.log('abierto');
+    //console.log('abierto');
 }
 
 function addEvento(dia, sem, titulo, hora, descrip) {
@@ -45,7 +45,7 @@ function addEvento(dia, sem, titulo, hora, descrip) {
         .add({ dia: at.getTime(), week: sem, titulo, hora, data: descrip });
 
     req.onsuccess = function (event) {
-        console.log("ADD exitosamente!", sem);
+        //console.log("ADD exitosamente!", sem);
         $('#newEvent').modal('hide');
     }
 
@@ -60,7 +60,7 @@ function delEvento(pkey, element) {
         .delete(pkey)
         .onsuccess = function (event) {
             element.parentNode.parentNode.removeChild(element.parentNode);
-            console.log("Evento eliminado");
+            //console.log("Evento eliminado");
         }
 }
 
@@ -73,7 +73,7 @@ function getCountEvent(time, id) {
         .count(limit);
 
     trns.onsuccess = function (event) {
-        console.log("Contador ", trns.result);
+        //console.log("Contador ", trns.result);
         if (trns.result)
             document.getElementsByClassName("day")[id].innerHTML += ` <span class="badge badge-primary">${trns.result}</span>`;
 
@@ -88,13 +88,13 @@ function getHTLMevents(time, week, element) {
     if (time) {
         limit = IDBKeyRange.bound(time, time + 86400000, false, true);
 
-        console.log("Consulta dia ", time, new Date(time));
+        //console.log("Consulta dia ", time, new Date(time));
         ind = db.transaction("eventos")
             .objectStore("eventos")
             .index("dia");
     } else if (week) {
         limit = IDBKeyRange.only(week);
-        console.log("Consulta week ", week);
+        //console.log("Consulta week ", week);
         ind = db.transaction("eventos")
             .objectStore("eventos")
             .index("week");
@@ -110,7 +110,7 @@ function getHTLMevents(time, week, element) {
 
                 let cursor = event.target.result;
                 if (cursor) {
-                    console.log(cursor);
+                    //console.log(cursor);
 
                     liElem = document.createElement("li");
                     liElem.setAttribute("class", "list-group-item justify-content-between align-items-center");
@@ -121,7 +121,7 @@ function getHTLMevents(time, week, element) {
                     cursor.continue();
                 } else {
                     //Nada mas
-                    console.log("Nada mas", ulElem);
+                    //console.log("Nada mas", ulElem);
                     element.innerHTML = "";
                     element.appendChild(ulElem);
                 }

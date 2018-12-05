@@ -319,12 +319,12 @@ function popError(msg){
 }
 
 if (navigator.serviceWorker.controller) {
-    console.log('[PWA Builder] active service worker found, no need to register')
+    //console.log('Active service worker found, no need to register')
   } else {
     //Register the ServiceWorker
     navigator.serviceWorker.register('cplus-sw.js', {
       scope: './'
     }).then(function(reg) {
-      console.log('Service worker has been registered for scope:'+ reg.scope);
+      //console.log('Service worker has been registered for scope:'+ reg.scope);
     });
   }
